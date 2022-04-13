@@ -7,23 +7,23 @@ class CNN(nn.Module):
     def __init__(self, num_channels=3):  #由于传入的是三维坐标
         super(CNN, self).__init__()
         #【input 244x244】 ->【conv（3）-（64） ，con（3）-（ 64）】->【maxpool】 3层 特征维度3->64
-        self.conv1 = nn.Conv1d(in_channels=num_channels, out_channels=64,kernel_size=3, padding='same')
-        self.conv2 = nn.Conv1d(64, 64, 3, padding='same')
+        self.conv1 = nn.Conv1d(in_channels=num_channels, out_channels=64,kernel_size=9, padding='same')
+        self.conv2 = nn.Conv1d(64, 64, 9, padding='same')
         #->【conv（3）-（128） ，con（3）-（128）】->【maxpool】 2层 特征维度64->128
-        self.conv3 = nn.Conv1d(64, 128, 3, padding='same')
-        self.conv4 = nn.Conv1d(128, 128, 3, padding='same')
+        self.conv3 = nn.Conv1d(64, 128, 9, padding='same')
+        self.conv4 = nn.Conv1d(128, 128, 9, padding='same')
         # ->【conv（3）-（256） ，con（3）-（256），conv（3）-（256）】->【maxpool】 2层 特征维度128->256
-        self.conv5 = nn.Conv1d(128,256,3,padding='same')
-        self.conv6 = nn.Conv1d(256,256,3,padding='same')
-        self.conv7 = nn.Conv1d(256,256,3,padding='same')
+        self.conv5 = nn.Conv1d(128,256,9,padding='same')
+        self.conv6 = nn.Conv1d(256,256,9,padding='same')
+        self.conv7 = nn.Conv1d(256,256,9,padding='same')
         #->【conv（3）-（512） ，con（3）-（512），conv（3）-（512）】->【maxpool】 2层 特征维度256->512
-        self.conv8 = nn.Conv1d(256,512,3,padding='same')
-        self.conv9 = nn.Conv1d(512,512,3,padding='same')
-        self.conv10 = nn.Conv1d(512,512,3,padding='same')
+        self.conv8 = nn.Conv1d(256,512,9,padding='same')
+        self.conv9 = nn.Conv1d(512,512,9,padding='same')
+        self.conv10 = nn.Conv1d(512,512,9,padding='same')
         #->【conv（3）-（512） ，con（3）-（512），conv（3）-（512）】->【maxpool】 2层 特征维度512->512
-        self.conv11 = nn.Conv1d(512,512,3,padding='same')
-        self.conv12 = nn.Conv1d(512,512,3,padding='same')
-        self.conv13 = nn.Conv1d(512,512,3,padding='same')
+        self.conv11 = nn.Conv1d(512,512,9,padding='same')
+        self.conv12 = nn.Conv1d(512,512,9,padding='same')
+        self.conv13 = nn.Conv1d(512,512,9,padding='same')
         self.relu = nn.ReLU()
         self.maxpool = nn.MaxPool1d(kernel_size=2,stride=2)
         self.sofmax = nn.Softmax(dim = 0)
@@ -74,6 +74,6 @@ class CNN(nn.Module):
         return [out1,out2,out3,out4,out5]
 if __name__ == "__main__":
     cnn = CNN()
-    input = torch.ones(3,3, 32)  #N是一个批处理大小，C表示多个通道， L 是信号序列的长度
+    input = torch.rand(15,3, 1347)  #N是一个批处理大小，C表示多个通道， L 是信号序列的长度
     output = cnn.forward(input)
     print(output.shape,output)
